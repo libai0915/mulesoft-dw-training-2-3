@@ -1,0 +1,122 @@
+[
+  {
+    "flightCode": "A14244",
+    "availableSeats": 10,
+    "destination": "SFO",
+    "planeType": "BOEING 787",
+    "origination": "MUA",
+    "price": 294,
+    "departureDate": "Feb 12, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B2C3",
+    "availableSeats": 40,
+    "destination": "SFO",
+    "planeType": "BOEING 737",
+    "origination": "MUA",
+    "price": 400,
+    "departureDate": "Mar 20, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1BTT4",
+    "availableSeats": 30,
+    "destination": "SFO",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 593,
+    "departureDate": "Feb 12, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B2C4",
+    "availableSeats": 10,
+    "destination": "LAX",
+    "planeType": "BOEING 737",
+    "origination": "MUA",
+    "price": 199.99,
+    "departureDate": "Feb 11, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1QWER",
+    "availableSeats": 18,
+    "destination": "LAX",
+    "planeType": "BOEING 747",
+    "origination": "MUA",
+    "price": 496,
+    "departureDate": "Aug 11, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A134DS",
+    "availableSeats": 40,
+    "destination": "LAX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 750,
+    "departureDate": "Apr 11, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "AFFFC4",
+    "availableSeats": 30,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 283,
+    "departureDate": "Feb 20, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B3D4",
+    "availableSeats": 10,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 385,
+    "departureDate": "Feb 12, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1FGF4",
+    "availableSeats": 80,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 958,
+    "departureDate": "Feb 13, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A12342",
+    "availableSeats": 17,
+    "destination": "CLE",
+    "planeType": "BOEING 727",
+    "origination": "MUA",
+    "price": 308,
+    "departureDate": "Jul 11, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B34S",
+    "availableSeats": 50,
+    "destination": "CLE",
+    "planeType": "BOEING 707",
+    "origination": "MUA",
+    "price": 420,
+    "departureDate": "Jun 11, 2015",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1ASD4",
+    "availableSeats": 40,
+    "destination": "CLE",
+    "planeType": "BOEING 757",
+    "origination": "MUA",
+    "price": 736,
+    "departureDate": "Sep 11, 2015",
+    "airlineName": "Delta"
+  }
+]

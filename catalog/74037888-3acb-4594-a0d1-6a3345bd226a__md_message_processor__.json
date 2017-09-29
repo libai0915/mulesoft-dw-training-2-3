@@ -1,0 +1,13 @@
+{
+    "inputMessageMetadata": {
+        "flowVariables": {
+            "airportInfo": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "airportDetailsVariable"
+            }
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "74037888-3acb-4594-a0d1-6a3345bd226a",
+    "version": "5.2.0.0"
+}

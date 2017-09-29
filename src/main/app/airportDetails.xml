@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="setAirportDetails">
+
+
+		<dw:transform-message doc:name="Join airport details to flights"
+			metadata:id="d85bc031-68f1-4f10-91cf-2ecc0eab13f7">
+			<dw:input-payload doc:sample="sample_data/json_4.json"
+				mimeType="application/json" />
+			
+			<dw:set-payload><![CDATA[%dw 1.0
+%input payload application/json
+%output application/json
+
+%var airportDetails = 
+readUrl("classpath://airportInfoTiny.json","application/json")
+groupBy $.IATA
+
+%function flightsJoinedWithAirportInfo(payload)
+payload map (flight) ->
+(
+  flight 
+  - "destination" 
+  ++ 
+  {airportCode: flight.destination} ++
+  {
+    destination:
+      {airportCode: flight.destination} 
+      ++ 
+      airportDetails[flight.destination][0]
+      - "openFlightsAirportId" - "type" - "source"
+  }
+)
+
+%function flightsJoinedWithAirportInfoV2(input)
+input map (
+  (flight, index) -> 
+  //{ 
+    //("flight" ++ index): 
+    	
+    	flight mapObject (
+          (value,key) ->
+            key match {
+              dest: "destination" -> joinAirportDetails(flight) ,
+			  //dest: "destination" -> addDestinationDetails(flight.destination),
+              default -> { (key) : value }
+          }
+      )   
+  //}
+)
+
+%var flightKeysToDelete = ["destination", "openFlightsAirportId", "type", "source"]
+
+%function filterDetailsKeys(detailsObject, keysArray)
+	detailsObject mapObject ((destValue, destKey)->
+		{(destKey): destValue}
+			unless keysArray contains (destKey as :string)
+			otherwise {}
+	)
+
+%function joinAirportDetails(flight)
+	destination: (
+		{airportCode: flight.destination}
+		++
+		(
+			filterDetailsKeys(
+				airportDetails[flight.destination][0],
+				flightKeysToDelete
+				)
+		)
+	)
+
+%function addDestinationDetails(destination)
+destination: (
+	{airportCode: destination}
+	++ 	
+	filterDetailsKeys(
+		airportDetails[destination][0],
+		airportKeysToDelete	
+	)
+)
+
+
+---
+//airportDetails
+
+flightsJoinedWithAirportInfo(payload)]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+
+</mule>

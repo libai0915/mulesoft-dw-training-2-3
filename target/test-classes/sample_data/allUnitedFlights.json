@@ -1,0 +1,112 @@
+[
+  {
+    "flightCode": "ER38sd",
+    "availableSeats": 0,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 400,
+    "departureDate": "2015/03/20",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER39rk",
+    "availableSeats": 54,
+    "destination": "SFO",
+    "planeType": "Boeing 757",
+    "origination": "MUA",
+    "price": 945,
+    "departureDate": "2015/09/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER39rj",
+    "availableSeats": 23,
+    "destination": "SFO",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 954,
+    "departureDate": "2015/02/12",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER45if",
+    "availableSeats": 52,
+    "destination": "LAX",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 345.99,
+    "departureDate": "2015/02/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER45jd",
+    "availableSeats": 12,
+    "destination": "LAX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 346,
+    "departureDate": "2015/04/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER0945",
+    "availableSeats": 0,
+    "destination": "LAX",
+    "planeType": "Boeing 707",
+    "origination": "MUA",
+    "price": 423,
+    "departureDate": "2015/06/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER95jf",
+    "availableSeats": 95,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 483,
+    "departureDate": "2015/02/20",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER04kf",
+    "availableSeats": 30,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 532,
+    "departureDate": "2015/02/12",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER49fd",
+    "availableSeats": 0,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 853,
+    "departureDate": "2015/02/13",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER3kfd",
+    "availableSeats": 13,
+    "destination": "CLE",
+    "planeType": "Boeing 747",
+    "origination": "MUA",
+    "price": 245,
+    "departureDate": "2015/08/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER9fje",
+    "availableSeats": 32,
+    "destination": "CLE",
+    "planeType": "Boeing 727",
+    "origination": "MUA",
+    "price": 845,
+    "departureDate": "2015/07/11",
+    "airlineName": "United"
+  }
+]

@@ -1,0 +1,1160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+	xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+	<flow name="simulateAllFlights">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/flights/samples" doc:name="HTTP" />
+		<dw:transform-message doc:name="Set all flights by airport flowVars">
+			<dw:set-variable variableName="allSFOFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allSFOFlights = 
+[
+  {
+    "flightCode": "rree1093",
+    "availableSeats": 1,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 142,
+    "departureDate": "2018-02-11T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "A14244",
+    "availableSeats": 10,
+    "destination": "SFO",
+    "planeType": "BOEING 787",
+    "origination": "MUA",
+    "price": 294,
+    "departureDate": "Feb 12, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "ffee2000",
+    "availableSeats": 30,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 300,
+    "departureDate": "2018-02-20T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "A1B2C3",
+    "availableSeats": 40,
+    "destination": "SFO",
+    "planeType": "BOEING 737",
+    "origination": "MUA",
+    "price": 400,
+    "departureDate": "Mar 20, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "ER38sd",
+    "availableSeats": 0,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 400,
+    "departureDate": "2018/03/20",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "rree4567",
+    "availableSeats": 100,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 456,
+    "departureDate": "2018-01-20T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "A1BTT4",
+    "availableSeats": 30,
+    "destination": "SFO",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 593,
+    "departureDate": "Feb 12, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "eefd1994",
+    "availableSeats": 0,
+    "destination": "SFO",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 676,
+    "departureDate": "2018-01-01T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "eefd3000",
+    "availableSeats": 0,
+    "destination": "SFO",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 900,
+    "departureDate": "2018-02-01T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "ER39rk",
+    "availableSeats": 54,
+    "destination": "SFO",
+    "planeType": "Boeing 757",
+    "origination": "MUA",
+    "price": 945,
+    "departureDate": "2018/09/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER39rj",
+    "availableSeats": 23,
+    "destination": "SFO",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 954,
+    "departureDate": "2018/02/12",
+    "airlineName": "United"
+  }
+]
+---
+allSFOFlights ]]></dw:set-variable>
+			<dw:set-variable variableName="allLAXFlights"><![CDATA[%dw 1.0
+%output application/json
+
+
+%var allLAXFlights =
+[
+  {
+    "flightCode": "A1B2C4",
+    "availableSeats": 10,
+    "destination": "LAX",
+    "planeType": "BOEING 737",
+    "origination": "MUA",
+    "price": 199.99,
+    "departureDate": "Feb 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "ffee0192",
+    "availableSeats": 0,
+    "destination": "LAX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 300,
+    "departureDate": "2018-01-20T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "ER45if",
+    "availableSeats": 52,
+    "destination": "LAX",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 345.99,
+    "departureDate": "2018/02/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER45jd",
+    "availableSeats": 12,
+    "destination": "LAX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 346,
+    "departureDate": "2018/04/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER0945",
+    "availableSeats": 0,
+    "destination": "LAX",
+    "planeType": "Boeing 707",
+    "origination": "MUA",
+    "price": 423,
+    "departureDate": "2018/06/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "A1QWER",
+    "availableSeats": 18,
+    "destination": "LAX",
+    "planeType": "BOEING 747",
+    "origination": "MUA",
+    "price": 496,
+    "departureDate": "Aug 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "rree0001",
+    "availableSeats": 0,
+    "destination": "LAX",
+    "planeType": "Boeing 787",
+    "origination": "MUA",
+    "price": 541,
+    "departureDate": "2018-01-20T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "A134DS",
+    "availableSeats": 40,
+    "destination": "LAX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 750,
+    "departureDate": "Apr 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "eefd4511",
+    "availableSeats": 100,
+    "destination": "LAX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 900,
+    "departureDate": "2018-01-15T00:00:00",
+    "airlineName": "American"
+  }
+]
+---
+allLAXFlights
+]]></dw:set-variable>
+			<dw:set-variable variableName="allPDXFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allPDXFlights =
+[
+  {
+    "flightCode": "AFFFC4",
+    "availableSeats": 30,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 283,
+    "departureDate": "Feb 20, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B3D4",
+    "availableSeats": 10,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 385,
+    "departureDate": "Feb 12, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "ER95jf",
+    "availableSeats": 95,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 483,
+    "departureDate": "2018/02/20",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER04kf",
+    "availableSeats": 30,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 532,
+    "departureDate": "2018/02/12",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ER49fd",
+    "availableSeats": 0,
+    "destination": "PDX",
+    "planeType": "Boeing 777",
+    "origination": "MUA",
+    "price": 853,
+    "departureDate": "2018/02/13",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "A1FGF4",
+    "availableSeats": 80,
+    "destination": "PDX",
+    "planeType": "BOEING 777",
+    "origination": "MUA",
+    "price": 958,
+    "departureDate": "Feb 13, 2018",
+    "airlineName": "Delta"
+  }
+]
+
+---
+allPDXFlights]]></dw:set-variable>
+			<dw:set-variable variableName="allCLEFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allCLEFlights = 
+[
+  {
+    "flightCode": "rree1000",
+    "availableSeats": 5,
+    "destination": "CLE",
+    "planeType": "Boeing 737",
+    "origination": "MUA",
+    "price": 200,
+    "departureDate": "2018-01-20T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "ER3kfd",
+    "availableSeats": 13,
+    "destination": "CLE",
+    "planeType": "Boeing 747",
+    "origination": "MUA",
+    "price": 245,
+    "departureDate": "2018/08/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "eefd0123",
+    "availableSeats": 7,
+    "destination": "CLE",
+    "planeType": "Boeing 747",
+    "origination": "MUA",
+    "price": 300,
+    "departureDate": "2018-01-25T00:00:00",
+    "airlineName": "American"
+  },
+  {
+    "flightCode": "A12342",
+    "availableSeats": 17,
+    "destination": "CLE",
+    "planeType": "BOEING 727",
+    "origination": "MUA",
+    "price": 308,
+    "departureDate": "Jul 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1B34S",
+    "availableSeats": 50,
+    "destination": "CLE",
+    "planeType": "BOEING 707",
+    "origination": "MUA",
+    "price": 420,
+    "departureDate": "Jun 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "A1ASD4",
+    "availableSeats": 40,
+    "destination": "CLE",
+    "planeType": "BOEING 757",
+    "origination": "MUA",
+    "price": 736,
+    "departureDate": "Sep 11, 2018",
+    "airlineName": "Delta"
+  },
+  {
+    "flightCode": "ER9fje",
+    "availableSeats": 32,
+    "destination": "CLE",
+    "planeType": "Boeing 727",
+    "origination": "MUA",
+    "price": 845,
+    "departureDate": "2018/07/11",
+    "airlineName": "United"
+  },
+  {
+    "flightCode": "ffee1112",
+    "availableSeats": 100,
+    "destination": "CLE",
+    "planeType": "Boeing 787",
+    "origination": "MUA",
+    "price": 954,
+    "departureDate": "2018-01-20T00:00:00",
+    "airlineName": "American"
+  }
+]
+---
+allCLEFlights]]></dw:set-variable>
+			<dw:set-variable variableName="deltaFlightsSoapResponseToAllDestinations"><![CDATA[%dw 1.0
+%output application/xml
+
+%var allDeltaFlightsXml =
+"
+<?xml version='1.0' encoding='UTF-8'?>
+<ns2:findFlightResponse xmlns:ns2='http://soap.training.mulesoft.com/'>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1B2C3</code>
+    <departureDate>2018/03/20</departureDate>
+    <destination>SFO</destination>
+    <emptySeats>40</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 737</planeType>
+    <price>400.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1BTT4</code>
+    <departureDate>2018/02/12</departureDate>
+    <destination>SFO</destination>
+    <emptySeats>30</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>593.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A14244</code>
+    <departureDate>2018/02/12</departureDate>
+    <destination>SFO</destination>
+    <emptySeats>10</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 787</planeType>
+    <price>294.0</price>
+  </return>
+  
+  
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1B2C4</code>
+    <departureDate>2018/02/11</departureDate>
+    <destination>LAX</destination>
+    <emptySeats>10</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 737</planeType>
+    <price>199.99</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A134DS</code>
+    <departureDate>2018/04/11</departureDate>
+    <destination>LAX</destination>
+    <emptySeats>40</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>750.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1QWER</code>
+    <departureDate>2018/08/11</departureDate>
+    <destination>LAX</destination>
+    <emptySeats>18</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 747</planeType>
+    <price>496.0</price>
+  </return>
+
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1FGF4</code>
+    <departureDate>2018/02/13</departureDate>
+    <destination>PDX</destination>
+    <emptySeats>80</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>958.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>AFFFC4</code>
+    <departureDate>2018/02/20</departureDate>
+    <destination>PDX</destination>
+    <emptySeats>30</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>283.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1B3D4</code>
+    <departureDate>2018/02/12</departureDate>
+    <destination>PDX</destination>
+    <emptySeats>10</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>385.0</price>
+  </return>
+
+
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1B34S</code>
+    <departureDate>2018/06/11</departureDate>
+    <destination>CLE</destination>
+    <emptySeats>50</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 707</planeType>
+    <price>420.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A12342</code>
+    <departureDate>2018/07/11</departureDate>
+    <destination>CLE</destination>
+    <emptySeats>17</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 727</planeType>
+    <price>308.0</price>
+  </return>
+    <return>
+    <airlineName>Delta</airlineName>
+    <code>A14444</code>
+    <departureDate>2017/09/21</departureDate>
+    <destination>CLE</destination>
+    <emptySeats>0</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 777</planeType>
+    <price>1308.0</price>
+  </return>
+  <return>
+    <airlineName>Delta</airlineName>
+    <code>A1ASD4</code>
+    <departureDate>2017/09/11</departureDate>
+    <destination>CLE</destination>
+    <emptySeats>40</emptySeats>
+    <origin>MUA</origin>
+    <planeType>Boing 757</planeType>
+    <price>736.0</price>
+  </return>
+</ns2:findFlightResponse>
+"
+
+
+---
+//read(allDeltaFlightsXml, "application/xml") //this fails
+
+read(allDeltaFlightsXml replace "\n" with "", "application/xml")
+
+]]></dw:set-variable>
+			<dw:set-variable variableName="americanFlightResponsesToAllDestinations"><![CDATA[%dw 1.0
+%output application/json
+
+%var americanFlightRequestsToAllAirports =
+[
+  {
+    "ID": 5,
+    "code": "rree1093",
+    "price": 142,
+    "departureDate": "2018-02-11T00:00:00",
+    "origin": "MUA",
+    "destination": "SFO",
+    "emptySeats": 1,
+    "plane": {
+      "type": "Boeing 737",
+      "totalSeats": 150
+    }
+  },
+  {
+    "ID": 7,
+    "code": "eefd1994",
+    "price": 676,
+    "departureDate": "2018-01-01T00:00:00",
+    "origin": "MUA",
+    "destination": "SFO",
+    "emptySeats": 0,
+    "plane": {
+      "type": "Boeing 777",
+      "totalSeats": 300
+    }
+  },
+  {
+    "ID": 8,
+    "code": "ffee2000",
+    "price": 300,
+    "departureDate": "2018-02-20T00:00:00",
+    "origin": "MUA",
+    "destination": "SFO",
+    "emptySeats": 30,
+    "plane": {
+      "type": "Boeing 737",
+      "totalSeats": 150
+    }
+  },
+  {
+    "ID": 9,
+    "code": "eefd3000",
+    "price": 900,
+    "departureDate": "2018-02-01T00:00:00",
+    "origin": "MUA",
+    "destination": "SFO",
+    "emptySeats": 0,
+    "plane": {
+      "type": "Boeing 737",
+      "totalSeats": 150
+    }
+  },
+  {
+    "ID": 11,
+    "code": "rree4567",
+    "price": 456,
+    "departureDate": "2018-01-20T00:00:00",
+    "origin": "MUA",
+    "destination": "SFO",
+    "emptySeats": 100,
+    "plane": {
+      "type": "Boeing 737",
+      "totalSeats": 150
+    }
+  },
+
+
+
+  {
+    "ID": 1,
+    "code": "rree0001",
+    "price": 541,
+    "departureDate": "2018-01-20T00:00:00",
+    "origin": "MUA",
+    "destination": "LAX",
+    "emptySeats": 0,
+    "plane": {
+      "type": "Boeing 787",
+      "totalSeats": 200
+    }
+  },
+  {
+    "ID": 3,
+    "code": "ffee0192",
+    "price": 300,
+    "departureDate": "2018-01-20T00:00:00",
+    "origin": "MUA",
+    "destination": "LAX",
+    "emptySeats": 0,
+    "plane": {
+      "type": "Boeing 777",
+      "totalSeats": 300
+    }
+  },
+  {
+    "ID": 10,
+    "code": "eefd4511",
+    "price": 900,
+    "departureDate": "2018-01-15T00:00:00",
+    "origin": "MUA",
+    "destination": "LAX",
+    "emptySeats": 100,
+    "plane": {
+      "type": "Boeing 777",
+      "totalSeats": 300
+    }
+  },
+
+
+
+  {
+    "ID": 2,
+    "code": "eefd0123",
+    "price": 300,
+    "departureDate": "2018-01-25T00:00:00",
+    "origin": "MUA",
+    "destination": "CLE",
+    "emptySeats": 7,
+    "plane": {
+      "type": "Boeing 747",
+      "totalSeats": 345
+    }
+  },
+  {
+    "ID": 4,
+    "code": "rree1000",
+    "price": 200,
+    "departureDate": "2018-01-20T00:00:00",
+    "origin": "MUA",
+    "destination": "CLE",
+    "emptySeats": 5,
+    "plane": {
+      "type": "Boeing 737",
+      "totalSeats": 150
+    }
+  },
+  {
+    "ID": 6,
+    "code": "ffee1112",
+    "price": 954,
+    "departureDate": "2018-01-20T00:00:00",
+    "origin": "MUA",
+    "destination": "CLE",
+    "emptySeats": 100,
+    "plane": {
+      "type": "Boeing 787",
+      "totalSeats": 200
+    }
+  }
+]
+---
+
+americanFlightRequestsToAllAirports]]></dw:set-variable>
+			<dw:set-variable variableName="unitedFlightsRestResponseToAllDestinations"><![CDATA[%dw 1.0
+%output application/json
+
+%var unitedFlightsRestResponseToAllDestinations =
+
+{
+  "flights": [
+
+
+   {
+      "code": "ER38sd",
+      "price": 400,
+      "origin": "MUA",
+      "destination": "SFO",
+      "departureDate": "2018/03/20",
+      "planeType": "Boeing 737",
+      "airlineName": "United",
+      "emptySeats": 0
+    },
+    {
+      "code": "ER39rk",
+      "price": 945,
+      "origin": "MUA",
+      "destination": "SFO",
+      "departureDate": "2018/09/11",
+      "planeType": "Boeing 757",
+      "airlineName": "United",
+      "emptySeats": 54
+    },
+    {
+      "code": "ER39rj",
+      "price": 954,
+      "origin": "MUA",
+      "destination": "SFO",
+      "departureDate": "2018/02/12",
+      "planeType": "Boeing 777",
+      "airlineName": "United",
+      "emptySeats": 23
+    },
+
+
+   {
+      "code": "ER45if",
+      "price": 345.99,
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2018/02/11",
+      "planeType": "Boeing 737",
+      "airlineName": "United",
+      "emptySeats": 52
+    },
+    {
+      "code": "ER45jd",
+      "price": 346,
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2018/04/11",
+      "planeType": "Boeing 777",
+      "airlineName": "United",
+      "emptySeats": 12
+    },
+    {
+      "code": "ER0945",
+      "price": 423,
+      "origin": "MUA",
+      "destination": "LAX",
+      "departureDate": "2018/06/11",
+      "planeType": "Boeing 707",
+      "airlineName": "United",
+      "emptySeats": 0
+    },
+
+    {
+      "code": "ER49fd",
+      "price": 853,
+      "origin": "MUA",
+      "destination": "PDX",
+      "departureDate": "2018/02/13",
+      "planeType": "Boeing 777",
+      "airlineName": "United",
+      "emptySeats": 0
+    },
+    {
+      "code": "ER95jf",
+      "price": 483,
+      "origin": "MUA",
+      "destination": "PDX",
+      "departureDate": "2018/02/20",
+      "planeType": "Boeing 777",
+      "airlineName": "United",
+      "emptySeats": 95
+    },
+    {
+      "code": "ER04kf",
+      "price": 532,
+      "origin": "MUA",
+      "destination": "PDX",
+      "departureDate": "2018/02/12",
+      "planeType": "Boeing 777",
+      "airlineName": "United",
+      "emptySeats": 30
+    },
+
+
+    {
+      "code": "ER9fje",
+      "price": 845,
+      "origin": "MUA",
+      "destination": "CLE",
+      "departureDate": "2018/07/11",
+      "planeType": "Boeing 727",
+      "airlineName": "United",
+      "emptySeats": 32
+    },
+    {
+      "code": "ER3kfd",
+      "price": 245,
+      "origin": "MUA",
+      "destination": "CLE",
+      "departureDate": "2018/08/11",
+      "planeType": "Boeing 747",
+      "airlineName": "United",
+      "emptySeats": 13
+    }
+   ]
+}
+
+---
+unitedFlightsRestResponseToAllDestinations]]></dw:set-variable>
+		</dw:transform-message>
+		<dw:transform-message doc:name="Set all flights by airline flowVars">
+			<dw:input-variable doc:sample="sample_data/list_json_5.json"
+				variableName="allCLEFlights" />
+			<dw:input-variable doc:sample="sample_data/list_json_6.json"
+				variableName="allPDXFlights" />
+			<dw:input-variable doc:sample="sample_data/list_json_7.json"
+				variableName="allLAXFlights" />
+			<dw:input-variable doc:sample="sample_data/list_json_8.json"
+				variableName="allSFOFlights" />
+			<dw:set-variable variableName="allDeltaFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allDeltaFlights =
+((flowVars.allSFOFlights groupBy $.airlineName)["Delta"] default [])
+++
+((flowVars.allLAXFlights groupBy $.airlineName)["Delta"] default [])
+++
+((flowVars.allPDXFlights groupBy $.airlineName)["Delta"] default [])
+++
+((flowVars.allCLEFlights groupBy $.airlineName)["Delta"] default [])
+
+---
+allDeltaFlights]]></dw:set-variable>
+			<dw:set-variable variableName="allUnitedFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allUnitedFlights =
+((flowVars.allSFOFlights groupBy $.airlineName)["United"] default [])
+++
+((flowVars.allLAXFlights groupBy $.airlineName)["United"] default [])
+++
+((flowVars.allPDXFlights groupBy $.airlineName)["United"] default [])
+++
+((flowVars.allCLEFlights groupBy $.airlineName)["United"] default [])
+
+---
+allUnitedFlights]]></dw:set-variable>
+			<dw:set-variable variableName="allAmericanFlights"><![CDATA[%dw 1.0
+%output application/json
+
+%var allAmericanFlights =
+((flowVars.allSFOFlights groupBy $.airlineName)["American"] default [])
+++
+((flowVars.allLAXFlights groupBy $.airlineName)["American"] default [])
+++
+((flowVars.allPDXFlights groupBy $.airlineName)["American"] default [])
+++
+((flowVars.allCLEFlights groupBy $.airlineName)["American"] default [])
+
+---
+allAmericanFlights]]></dw:set-variable>
+		</dw:transform-message>
+	</flow>
+	<flow name="getAmericanFlightsFlow">
+		<flow-ref name="simulateAmericanRestRequest" doc:name="simulateAmericanRestRequest" />
+        <json:validate-schema schemaLocation="schema/json/americanFlightsResponseSchema.json" doc:name="Validate American JSON response schema" metadata:id="082158cb-25d5-49cd-b70d-ebbf504e6615"/>
+
+		<dw:transform-message doc:name="Translate to Flight common object"
+			metadata:id="b0cedaf2-caa5-402e-b1c5-97ba2dc66dff">
+			<dw:input-payload  doc:sample="sample_data/list_json_1.json"
+				mimeType="application/json" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+
+//%var airline = "american"
+
+//%function formatValue (value, formatter)
+//formatter( value ++ " airlines")
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	airlineName: "American", //formatValue( airline, (x)->capitalize x), //"$(airline) airlines",
+	availableSeats: payload01.emptySeats,
+	departureDate: payload01.departureDate,
+	destination: payload01.destination,
+	flightCode: payload01.code,
+	origination: payload01.origin,
+	planeType: payload01.plane.type,
+	price: payload01.price
+} as :object {
+	class : "com.mulesoft.training.Flight"
+})]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="simulateAmericanRestRequest">
+		<dw:transform-message doc:name="Simulate American flights data"
+			metadata:id="9bfa9fc5-01cc-4ea3-b576-f2b2ee0eb411">
+			<dw:input-variable doc:sample="sample_data/allAmericanFlights.json"
+				mimeType="application/json" variableName="allAmericanFlights" />
+			<dw:input-variable doc:sample="sample_data/string_1.dwl"
+				mimeType="application/java" variableName="code" />
+			<dw:input-variable doc:sample="sample_data/list_json_9.json"
+				variableName="americanFlightResponsesToAllDestinations" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+(
+  (
+    flowVars.americanFlightResponsesToAllDestinations groupBy $.destination
+  )[flowVars.code] orderBy $.emptySeats
+)[-1 to 0] default []]]></dw:set-payload>
+		</dw:transform-message>
+        <dw:transform-message doc:name="Match types" metadata:id="9bfa9fc5-01cc-4ea3-b576-f2b2ee0eb411">
+            <dw:input-payload doc:sample="sample_data/string_7.dwl"/>
+            <dw:input-variable doc:sample="sample_data/allAmericanFlights.json" mimeType="application/json" variableName="allAmericanFlights"/>
+            <dw:input-variable doc:sample="sample_data/string_1.dwl" mimeType="application/java" variableName="code"/>
+            <dw:input-variable doc:sample="sample_data/list_json_9.json" variableName="americanFlightResponsesToAllDestinations"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+
+%var myLib = readUrl("classpath://dw/myFlightsLib.dwl")
+
+
+---
+//myLib.processByType(payload[0].price + 0.035)
+
+//myLib.processByType(payload[0].price * myLib.exchangeRate)
+
+payload]]></dw:set-payload>
+        </dw:transform-message>
+	</flow>
+	<flow name="getDeltaFlightsFlow">
+		<dw:transform-message doc:name="Pass code">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://soap.training.mulesoft.com/
+---
+{
+	ns0#findFlight: {
+		destination: flowVars.code as :string
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<flow-ref name="simulateDeltaSoapRequest" doc:name="simulateDeltaSoapRequest" />
+        <dw:transform-message doc:name="Translate Delta XML response to Flight common object" metadata:id="1bd7e373-7898-44e8-b4dd-0e7cb672fb35">
+            <dw:input-payload doc:sample="sample_data/findFlightResponse.xml" mimeType="application/xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+
+
+%output application/java
+%input payload application/xml
+
+%namespace ns0 http://soap.training.mulesoft.com/
+%type currency = :string {format: "###.00"}
+%type flight = :object {class: "com.mulesoft.training.Flight"}
+
+//%var myLib = readUrl("classpath://dw/myFlightsLib.wev")
+
+
+
+//%var deltaFlights2 =
+
+%function transformDeltaFlightsResponse (payload)
+payload.ns0#findFlightResponse.*return map ((return , indexOfReturn) -> {
+	airlineName: return.airlineName,
+	availableSeats: return.emptySeats as :number,
+	departureDate: return.departureDate as :date {format: "yyyy/MM/dd"} 
+	as :string {format: "MMM dd, yyyy"},
+	destination: return.destination,
+	flightCode: return.code,
+	origination: return.origin,
+	planeType: upper (return.planeType replace /(Boing)/ with "Boeing"),
+	price: return.price  as :number as :currency
+	//totalSeats: getNumSeats(return.planeType)
+	////totalSeats: lookup("getTotalSeatsFlow",{type: return.planeType})
+} as :flight 
+)
+	
+	
+
+---
+//myLib.myDeltaFlights(payload)
+transformDeltaFlightsResponse(payload)
+
+
+]]></dw:set-payload>
+            <dw:set-variable variableName="format"><![CDATA[%dw 1.0
+%output application/dw
+
+%var exchangeRate = 1.1524
+%var combineLambda= ( (arg1, arg2) -> arg1 ++ (arg2 * exchangeRate) )
+
+%function format( input, func)
+func(input)
+
+---
+{result: 
+	format ( combineLambda( "price is: ", 120 ), (x) -> upper x )
+}]]></dw:set-variable>
+        </dw:transform-message>
+		<logger level="INFO" doc:name="Logger" />
+	</flow>
+	<flow name="simulateDeltaSoapRequest">
+		<dw:transform-message doc:name="Set example Delta XML response from DW format"
+			metadata:id="e84b6a00-78e5-4a30-95a4-c32bd51f9796">
+			<dw:input-payload doc:sample="sample_data/findFlight.xml" />
+			<dw:input-variable doc:sample="sample_data/string_2.dwl"
+				mimeType="application/xml" variableName="allDeltaFlightsXml" />
+			<dw:input-variable doc:sample="sample_data/string_5.dwl"
+				mimeType="application/java" variableName="code" />
+			<dw:input-variable doc:sample="sample_data/xml.xml"
+				mimeType="application/xml" variableName="deltaFlightsSoapResponseToAllDestinations" />
+            <dw:input-variable variableName="allCLEFlights"/>
+            <dw:input-variable variableName="allLAXFlights"/>
+            <dw:input-variable variableName="allPDXFlights"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+
+//%var myLib = readUrl("classpath://dw/myFlightsLib.wev", "application/dw")
+
+%namespace ns2 http://soap.training.mulesoft.com/
+
+//%var flightsOrderedByEmptySeats = 
+
+
+//%var allDeltaFlights = flowVars.deltaFlightsSoapResponseToAllDestinations
+
+//%function filterFlightsByCode(allFlightsSoapResponse) 
+
+
+	
+//%function orderFlightsByEmptySeats(flights)
+
+//%function createFlightsList(flightArray)
+
+
+//%function packageFindFlightResponse(flights)
+
+//%function objectArrayToObject(objArray)
+
+//%var orderFlights =
+
+
+---
+{ns2#findFlightResponse:
+  using
+  (
+    deltaFlights = 
+	flowVars.deltaFlightsSoapResponseToAllDestinations.ns2#findFlightResponse
+  )
+  (
+    (deltaFlights filter $.destination == flowVars.code) orderBy $.emptySeats 
+  )[-1 to 0] default {}
+}
+]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="getUnitedFightsFlow">
+		<flow-ref name="simulateUnitedRestRequest" doc:name="simulateUnitedRestRequest" />
+        <json:validate-schema schemaLocation="schema/json/unitedFindFlightsResponseSchema.json" doc:name="Validate JSON Schema"/>
+		<dw:transform-message doc:name="Translate to Flight Java object"
+			metadata:id="f497884b-4028-4fc5-aa60-f9ae109d5fe7">
+			<dw:input-payload mimeType="application/json"
+				doc:sample="sample_data/json_6.json" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload.flights map ((flight , indexOfFlight) -> {
+	airlineName: flight.airlineName,
+	availableSeats: flight.emptySeats,
+	departureDate: flight.departureDate,
+	destination: flight.destination,
+	flightCode: flight.code,
+	origination: flight.origin,
+	planeType: flight.planeType,
+	price: flight.price
+} as :object {
+	class : "com.mulesoft.training.Flight"
+})]]></dw:set-payload>
+		</dw:transform-message>
+		<logger level="INFO" doc:name="Logger" />
+	</flow>
+	<flow name="simulateUnitedRestRequest">
+		<dw:transform-message doc:name="Simulate United flights data"
+			metadata:id="9bfa9fc5-01cc-4ea3-b576-f2b2ee0eb411">
+			<dw:input-variable doc:sample="sample_data/allAmericanFlights.json"
+				 variableName="allAmericanFlights" />
+			<dw:input-variable doc:sample="sample_data/string_1.dwl"
+				mimeType="application/java" variableName="code" />
+			<dw:input-variable doc:sample="sample_data/allUnitedFlights.json"
+				 variableName="allUnitedFlights" />
+			<dw:input-variable doc:sample="sample_data/list_json_10.json"
+				variableName="unitedFlightsRestResponseToAllDestinations" />
+            <dw:input-variable variableName="americanFlightResponsesToAllDestinations"/>
+            <dw:input-variable variableName="allCLEFlights"/>
+            <dw:input-variable variableName="allLAXFlights"/>
+            <dw:input-variable variableName="allPDXFlights"/>
+            <dw:input-variable variableName="allSFOFlights"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+
+---
+{flights: 
+	((flowVars.unitedFlightsRestResponseToAllDestinations.flights groupBy $.destination)[flowVars.code]
+		orderBy $.emptySeats)[-1 to 0]
+}]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="emptyAmericanResponse">
+		<logger
+			message="#[&quot;American flights request did not return any flights: &quot;+message.payload]"
+			level="WARN" category="com.mulesoft.training.flights" doc:name="Logger" />
+		<set-payload value="#[[]]" doc:name="set payload to []" />
+	</flow>
+	<flow name="emptyDeltaResponse">
+		<logger
+			message="#[&quot;Delta flights request did not return any flights: &quot;+message.payload]"
+			level="WARN" category="com.mulesoft.training.flights" doc:name="Logger" />
+		<set-payload value="#[[]]" doc:name="set payload to []" />
+	</flow>
+	<flow name="emptyUnitedResponse">
+		<logger
+			message="#[&quot;United flights request did not return any flights: &quot;+message.payload]"
+			level="WARN" category="com.mulesoft.training.flights" doc:name="Logger" />
+		<set-payload value="#[[]]" doc:name="set payload to []" />
+	</flow>
+	<flow name="getTotalSeatsFlow">
+		<expression-component doc:name="Expression"><![CDATA[if (payload.type.contains('737')){
+	payload = 150;
+} else {
+	payload = 300;
+}]]></expression-component>
+	</flow>
+</mule>

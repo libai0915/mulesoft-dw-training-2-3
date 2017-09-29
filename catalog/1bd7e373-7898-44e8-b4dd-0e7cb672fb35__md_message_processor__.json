@@ -1,0 +1,29 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "Delta_Web_Service_Consumer",
+            "typeId": "findFlightResponse"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "model": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "Flight_pojo"
+            },
+            "isArray": false,
+            "dataType": "LIST",
+            "metaDataModelPropertiesManager": {
+                "properties": []
+            }
+        },
+        "flowVariables": {
+            "testAutoMap": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "Flight_pojo"
+            }
+        }
+    },
+    "id": "1bd7e373-7898-44e8-b4dd-0e7cb672fb35",
+    "version": "5.2.0.0"
+}

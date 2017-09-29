@@ -1,0 +1,20 @@
+{
+    "inputMessageMetadata": {
+        "flowVariables": {
+            "americanFlightResponsesToAllDestinations": {},
+            "allUnitedFlights": {},
+            "allPDXFlights": {},
+            "code": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "airportCode"
+            },
+            "allAmericanFlights": {},
+            "allSFOFlights": {},
+            "allCLEFlights": {},
+            "allLAXFlights": {}
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "9bfa9fc5-01cc-4ea3-b576-f2b2ee0eb411",
+    "version": "5.2.0.0"
+}

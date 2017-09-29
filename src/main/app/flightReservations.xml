@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+    <flow name="getFlightsFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/flights" allowedMethods="GET" doc:name="GET /flights"/>
+        <set-variable variableName="airline" value="#[message.inboundProperties.'http.query.params'.airline]" doc:name="Set airline variable"/>
+        <flow-ref name="setCodeSubflow" doc:name="setCodeSubflow"/>
+        <flow-ref name="simulateAllFlights" doc:name="simulateAllFlights"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.airline == &quot;american&quot;]">
+                <flow-ref name="getAmericanFlightsFlow" doc:name="getAmericanFlightsFlow"/>
+            </when>
+            <when expression="#[flowVars.airline == &quot;delta&quot;]">
+                <flow-ref name="getDeltaFlightsFlow" doc:name="getDeltaFlightsFlow"/>
+            </when>
+            <when expression="#[flowVars.airline == &quot;united&quot;]">
+                <flow-ref name="getUnitedFightsFlow" doc:name="getUnitedFightsFlow"/>
+            </when>
+            <otherwise>
+                <flow-ref name="getAllAirlineFlightsFlow" doc:name="getAllAirlineFlightsFlow"/>
+            </otherwise>
+        </choice>
+        <validation:is-not-empty value="#[payload]" message="Payload is empty" doc:name="Validate response is not empty"/>
+        <dw:transform-message doc:name="Order by price" metadata:id="c1bfa6ff-52b1-4736-9544-f83fb1710ec8">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload orderBy $.price]]></dw:set-payload>
+        </dw:transform-message>
+        <flow-ref name="setAirportDetails" doc:name="setAirportDetails"/>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+    <sub-flow name="setCodeSubflow">
+        <set-variable variableName="code" value="#[(message.inboundProperties.'http.query.params'.code == empty) ? 'SFO' : message.inboundProperties.'http.query.params'.code]" doc:name="Set airport code variable"/>
+    </sub-flow>
+    <flow name="getAllAirlineFlightsFlow">
+        <scatter-gather doc:name="Scatter-Gather">
+            <processor-chain>
+                <flow-ref name="getDeltaFlightsFlow" doc:name="getDeltaFlightsFlow"/>
+                <message-filter onUnaccepted="emptyDeltaResponse" doc:name="PayloadIsArrayList">
+                    <payload-type-filter expectedType="java.util.ArrayList"/>
+                </message-filter>
+            </processor-chain>
+            <processor-chain>
+                <flow-ref name="getUnitedFightsFlow" doc:name="getUnitedFightsFlow"/>
+                <message-filter onUnaccepted="emptyUnitedResponse" doc:name="PayloadIsArrayList">
+                    <payload-type-filter expectedType="java.util.ArrayList"/>
+                </message-filter>
+            </processor-chain>
+            <processor-chain>
+                <flow-ref name="getAmericanFlightsFlow" doc:name="getAmericanFlightsFlow"/>
+                <message-filter onUnaccepted="emptyAmericanResponse" doc:name="PayloadIsArrayList">
+                    <payload-type-filter expectedType="java.util.ArrayList"/>
+                </message-filter>
+            </processor-chain>
+        </scatter-gather>
+        <dw:transform-message doc:name="Transform Message" metadata:id="67e40036-20f4-4e31-9f8b-6109eabcde3b">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+flatten payload]]></dw:set-payload>
+        </dw:transform-message>
+        <logger level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

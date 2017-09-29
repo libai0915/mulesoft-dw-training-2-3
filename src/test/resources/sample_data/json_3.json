@@ -1,0 +1,21 @@
+{ 
+  "VersionNo":"1.1",
+  "OriginatingStoreID":"20",
+  "PurchaseBroker":"SkyMiles Shopping",
+  "Items":  
+    [        
+      {           
+        "ItemID":"46315801",         
+        "DeliveryMethod":"SHIP",         
+        "Quantity":5,         
+        "ShipNode":""      
+      },      
+      {
+        "ItemID":"22087289",         
+        "DeliveryMethod":"IN-FLIGHT",         
+        "Quantity":2,         
+        "ShipNode":""      
+      }   
+    ]
+  
+}

@@ -1,0 +1,18 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "flights_xml"
+        }
+    },
+    "outputMessageMetadata": {
+        "flowVariables": {
+            "testAutoMap": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "Flight_pojo"
+            }
+        }
+    },
+    "id": "96fb39f9-767a-412b-a708-291e90247666",
+    "version": "5.2.0.0"
+}

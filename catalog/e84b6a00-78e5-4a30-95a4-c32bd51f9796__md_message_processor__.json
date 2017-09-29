@@ -1,0 +1,29 @@
+{
+    "inputMessageMetadata": {
+        "flowVariables": {
+            "deltaFlightsSoapResponseToAllDestinations": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "allDeltaFlightsXml"
+            },
+            "allPDXFlights": {},
+            "code": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "airportCode"
+            },
+            "allDeltaFlightsXml": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "allDeltaFlightsXml"
+            },
+            "allCLEFlights": {},
+            "allLAXFlights": {}
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "Delta_Web_Service_Consumer",
+            "typeId": "findFlightResponse"
+        }
+    },
+    "id": "e84b6a00-78e5-4a30-95a4-c32bd51f9796",
+    "version": "5.2.0.0"
+}

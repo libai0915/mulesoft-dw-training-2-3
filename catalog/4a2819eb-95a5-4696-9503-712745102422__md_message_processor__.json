@@ -1,0 +1,18 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Flight_pojo"
+        },
+        "flowVariables": {
+            "airlineDetails": {},
+            "airportDetails": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "airportDetailsVariable"
+            }
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "4a2819eb-95a5-4696-9503-712745102422",
+    "version": "5.2.0.0"
+}
